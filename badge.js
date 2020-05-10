@@ -142,7 +142,7 @@
       }
 
       nodes.repos.container.className = 'repos';
-      nodes.repos.title.innerHTML = 'Popular repositories';
+      nodes.repos.title.innerHTML = 'Recently updated repositories';
 
       var r_ = nodes.repos;
       var rc = r_.container;
@@ -234,21 +234,21 @@
 
         if(widget_data.badge != 'octo'){
           var sorted = widget_data.repos.sort(function(a, b){
-            if(a.stargazers_count < b.stargazers_count) return 1;
-            if(a.stargazers_count > b.stargazers_count) return -1;
+            const aUpdatedAt = new Date(a.updated_at);
+            const bUpdatedAt = new Date(b.updated_at);
+            if(aUpdatedAt < bUpdatedAt) return 1;
+            if(aUpdatedAt > bUpdatedAt) return -1;
             return 0;
           });
 
           var t = sorted.slice(0, 3);
           t.map(function(repo){
             var p = el('p');
-            var i = el('i');
-            i.className = 'fa fa-star';
-            p.appendChild(i);
-            var s = el('span');
-            s.innerHTML = repo.stargazers_count;
-            p.appendChild(s);
-            p.innerHTML = p.innerHTML + repo.name + ' ('+repo.language+')';
+            let projectString = p.innerHTML + repo.name;
+            if(repo.language){
+              projectString = projectString.concat(' ('+repo.language+')')
+            }
+            p.innerHTML = projectString;
             nodes.repos.listContainer.appendChild(p);
           });
 
@@ -308,7 +308,7 @@
   /*
    * Add the history elements
    */
-  function widgetHistoryElement(widget, widget_data, nodes){  
+  function widgetHistoryElement(widget, widget_data, nodes){ 
     if(widget_data.badge == 'octo'){
       nodes.history = el('div');
       nodes.history.className = 'history';

@@ -52,7 +52,7 @@
 }
 
 .github-badge img.user {
-  border-radius: 50%;
+  border-radius: 5pt;
   display: block;
   margin:0 auto 10px auto;
 }
@@ -71,7 +71,6 @@
 .github-badge h4, p {
   text-align: left;
   display: block;
-  vertical-align:top;
   margin:5px 0 5px 0;
 }
 
